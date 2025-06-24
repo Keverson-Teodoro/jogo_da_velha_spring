@@ -14,7 +14,7 @@ public class Tabuleiro {
     private long idJogo;
 
     @Column(name = "jogo_posicoes")
-    private List<String> jogoPosicoes;
+    private String jogoPosicoes;
 
     @Column(name = "jogador_atual")
     private char jogadorAtual;
@@ -31,11 +31,11 @@ public class Tabuleiro {
         this.idJogo = idJogo;
     }
 
-    public List<String> getJogoPosicoes() {
+    public String getJogoPosicoes() {
         return jogoPosicoes;
     }
 
-    public void setJogoPosicoes(List<String> jogoPosicoes) {
+    public void setJogoPosicoes(String jogoPosicoes) {
         this.jogoPosicoes = jogoPosicoes;
     }
 
