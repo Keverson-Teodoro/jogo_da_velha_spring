@@ -10,6 +10,7 @@ import jogo_da_velha.backend.model.Tabuleiro;
 import jogo_da_velha.backend.repository.TabuleiroRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import com.google.gson.Gson;
 
 @Service
 public class JogoDaVelhaService {
@@ -34,9 +35,6 @@ public class JogoDaVelhaService {
     // }
 
     public Long iniciarJogo() {
-
-
-
         Tabuleiro tabuleiro = new Tabuleiro();
 
         List<String> posicoes = new ArrayList<>();
@@ -60,18 +58,13 @@ public class JogoDaVelhaService {
          return tabuleiroRepository.getReferenceById(id);
      }
 
-     public String jogoDaVelha(long id, int jogada){
-
-        char vencedor = ' ';
-
-
-         List<List<Integer>> combinacoes = gerarCombinacoes();
+     public List<String> jogoDaVelha(long id, int jogada){
          Tabuleiro tabuleiro = jogar(id);
-
+        char vencedor = ' ';
          char jogadorAtual = tabuleiro.getJogadorAtual();
 
+         List<List<Integer>> combinacoes = gerarCombinacoes();
          List<String> posicoes = new ArrayList<>();
-
          List<Integer> posicoesNumeradas = gerarPosicoesDoTabuleiro();
 
 
@@ -80,7 +73,7 @@ public class JogoDaVelhaService {
          String[] jogo = posicoesSemColchetes.split(", \\s*");
 
          String[][] jogoDaVelha = new String[3][3];
-//         List<String> posicoes = new ArrayList<>();
+
          int contador = 0;
 
 
@@ -94,12 +87,29 @@ public class JogoDaVelhaService {
                  }
              }
 
-             while(contador != 0){
+             for(Integer position : posicoesNumeradas){
+                 tabuleiro.setJogadorAtual('X');
 
+                 if(jogada == position && jogadorAtual == 'X' && posicoes.get(jogada).equals("n")){
+
+                     posicoes.set(jogada, "X");
+                     tabuleiro.setJogadorAtual('O');
+
+                 }
+                 else if(jogada == position && jogadorAtual == 'O' && posicoes.get(jogada).equals("n")){
+                     posicoes.set(jogada, "O");
+
+                 }
              }
+             Gson transformadorDeListaEmString = new Gson();
+             String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
+             tabuleiro.setJogoPosicoes(posicoesAtualizadas);
 
 
 
+
+
+            // verifica os ganhadores percorrendo as combinações de vitória
              for(List<Integer> combinacao : combinacoes){
                  for(Integer combinacaoPosicao: combinacao){
                      if(posicoes.get(combinacaoPosicao).equals("X")){
@@ -116,20 +126,10 @@ public class JogoDaVelhaService {
                  }
              }
 
-             for(Integer position : posicoesNumeradas){
-                 if(jogada == position && jogadorAtual == 'X' && posicoes.get(jogada).equals("n")){
-                     posicoes.set(jogada, "X");
-                     //colocar o jogador atual
-                 }
-                 else if(jogada == position && jogadorAtual == 'O' && posicoes.get(jogada).equals("n")){
-                     posicoes.set(jogada, "O");
-
-                 }
-             }
 
 
 
-             tabuleiro.setJogadorAtual('X');
+
 
 
 
@@ -344,12 +344,12 @@ public class JogoDaVelhaService {
 //            }
 
 
-             return "Retorno";
+
          } catch (Exception e) {
              System.out.println(e.getMessage());
 
          }
-         return "finalizou";
+         return posicoes;
      }
 
 
