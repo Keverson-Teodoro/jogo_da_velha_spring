@@ -97,13 +97,16 @@ public class JogoDaVelhaService {
 
                  }
                  else if(jogada == position && jogadorAtual == 'O' && posicoes.get(jogada).equals("n")){
+
                      posicoes.set(jogada, "O");
+                     tabuleiro.setJogadorAtual('X');
 
                  }
              }
              Gson transformadorDeListaEmString = new Gson();
              String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
              tabuleiro.setJogoPosicoes(posicoesAtualizadas);
+             tabuleiroRepository.save(tabuleiro);
 
 
 
