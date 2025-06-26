@@ -53,528 +53,224 @@ public class JogoDaVelhaService {
     }
 
 
+    public Tabuleiro tabuleiroAtual(long id) {
+        return tabuleiroRepository.getReferenceById(id);
+    }
 
-     public Tabuleiro jogar(long id){
-         return tabuleiroRepository.getReferenceById(id);
-     }
+    public String[] jogoDaVelha(long id, int jogada) {
 
-     public List<String> jogoDaVelha(long id, int jogada){
-         Tabuleiro tabuleiro = jogar(id);
+
+        Tabuleiro tabuleiro = tabuleiroRepository.getReferenceById(id);
         char vencedor = ' ';
-         char jogadorAtual = tabuleiro.getJogadorAtual();
-
-         List<List<Integer>> combinacoes = gerarCombinacoes();
-         List<String> posicoes = new ArrayList<>();
-         List<Integer> posicoesNumeradas = gerarPosicoesDoTabuleiro();
+        char jogadorAtual = tabuleiro.getJogadorAtual();
 
 
-         String posicoesSemColchetes = tabuleiro.getJogoPosicoes().replace("[", "")
-                 .replace("]", "");
-         String[] jogo = posicoesSemColchetes.split(", \\s*");
+        List<List<Integer>> combinacoes = gerarCombinacoes();
+        List<String> posicoes = new ArrayList<>();
+        List<Integer> posicoesNumeradas = gerarPosicoesDoTabuleiro();
 
-         String[][] jogoDaVelha = new String[3][3];
+        Gson transformadorDeListaEmString = new Gson();
 
-         int contador = 0;
+        String[][] jogoDaVelha = new String[3][3];
+        List<String> teste = new ArrayList<>();
 
 
-         try {
-             contador = 9;
+        String posicoesSemColchetes = tabuleiro.getJogoPosicoes().replace("[", "")
+                .replace("]", "").replace("\"", "");
 
-             for (int i = 0; i < jogoDaVelha.length; i++) {
-                 for (int j = 0; j < jogoDaVelha.length; j++) {
-                     jogoDaVelha[i][j] = jogo[j];
-                     posicoes.add(jogo[j]);
-                 }
-             }
+        String[] jogo = posicoesSemColchetes.split(", \\s*");
 
-             for(Integer position : posicoesNumeradas){
-                 tabuleiro.setJogadorAtual('X');
-
-                 if(jogada == position && jogadorAtual == 'X' && posicoes.get(jogada).equals("n")){
-
-                     posicoes.set(jogada, "X");
-                     tabuleiro.setJogadorAtual('O');
-
-                 }
-                 else if(jogada == position && jogadorAtual == 'O' && posicoes.get(jogada).equals("n")){
-
-                     posicoes.set(jogada, "O");
-                     tabuleiro.setJogadorAtual('X');
-
-                 }
-             }
-             Gson transformadorDeListaEmString = new Gson();
-             String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
-             tabuleiro.setJogoPosicoes(posicoesAtualizadas);
-             tabuleiroRepository.save(tabuleiro);
+//        String[] jogoCorrigido = new String[9];
+//        for (int i = 0; i < jogo.length; i++) {
+//            jogoCorrigido[i] = jogo[i];
+//        }
+//        for (int i = 0; i < jogo.length; i++) {
+//            jogoCorrigido[i] = "";
+//            jogo[i] = " ";
+//        }
 
 
 
+
+//        String[] jogo = {" ", " ", " ", " ", " ", " ", " ", " ", " "};
+
+        for (Integer posi : posicoesNumeradas) {
+
+            if (jogada == posi && jogadorAtual == 'O' && jogo[posi].equals(" ")) {
+                jogo[posi] = "O";
+                tabuleiro.setJogadorAtual('X');
+                String posicoesAtualizadas = transformadorDeListaEmString.toJson(jogo);
+                tabuleiro.setJogoPosicoes(posicoesAtualizadas);
+                tabuleiroRepository.save(tabuleiro);
+
+            }
+            else if(jogada == posi && jogadorAtual == 'X' && jogo[posi].equals(" ")){
+                jogo[posi] = "X";
+                tabuleiro.setJogadorAtual('O');
+                String posicoesAtualizadas = transformadorDeListaEmString.toJson(jogo);
+                tabuleiro.setJogoPosicoes(posicoesAtualizadas);
+                tabuleiroRepository.save(tabuleiro);
+            }
+
+
+        }
+
+
+            jogoDaVelha = new String[3][3];
+//             for (int i = 0; i < jogoDaVelha.length; i++) {
+//                 for (int j = 0; j < jogoDaVelha.length; j++) {
+//                     jogoDaVelha[i][j] = jogo[j];
+//                     posicoes.add(jogo[j]);
+//                 }
+//             }
+
+//         for (int i = 0; i < posicoesNumeradas.size(); i++) {
+//             posicoes.add(jogo[i]);
+//         }
+
+//         if(jogada == 2 && jogo[jogada].isBlank() && jogadorAtual == 'X' ){
+//             jogo[jogada] = "X";
+//             tabuleiro.setJogadorAtual('O');
+//             String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
+//             tabuleiro.setJogoPosicoes(posicoesAtualizadas);
+//             tabuleiroRepository.save(tabuleiro);
+//
+//         }
+
+
+//             if(jogada == 1 && jogadorAtual == 'X' && posicoes.get(jogada).equals("null")){
+//                 posicoes.add(1, "X");
+//                 tabuleiro.setJogadorAtual('O');
+//                 String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
+//                 tabuleiro.setJogoPosicoes(posicoesAtualizadas);
+//                 tabuleiroRepository.save(tabuleiro);
+//                 return "caiu no if do X";
+//             }
+
+//             else if(jogada == 0 && jogadorAtual == 'O' && posicoes.get(jogada).equals("null")){
+//                 posicoes.add("O");
+//                 tabuleiro.setJogadorAtual('X');
+//                 String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
+//                 tabuleiro.setJogoPosicoes(posicoesAtualizadas);
+//                 tabuleiroRepository.save(tabuleiro);
+//             }
+
+//             for (Integer posi : posicoesNumeradas){
+//                 if(jogada == 0 && jogadorAtual == 'X' && posicoes.get(jogada).equals("n")){
+//                     posicoes.set(jogada, "X");
+//                     tabuleiro.setJogadorAtual('O');
+//                     String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
+//                     tabuleiro.setJogoPosicoes(posicoesAtualizadas);
+//                     tabuleiroRepository.save(tabuleiro);
+//                     return "caiu no if do X";
+//                 }
+//
+//                 if(jogada == 0 && jogadorAtual == 'O' && posicoes.get(jogada).equals("n")){
+//                     posicoes.set(jogada, "O");
+//                     tabuleiro.setJogadorAtual('X');
+//                     String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
+//                     tabuleiro.setJogoPosicoes(posicoesAtualizadas);
+//                     tabuleiroRepository.save(tabuleiro);
+//                     return "caiu no if do bola";
+//                 }
+//
+//
+//             }
+
+//
+//
+//
+//             for(Integer position : posicoesNumeradas){
+//
+//                 if(jogada == position && jogadorAtual == 'X' && "n".equals(posicoes.get(position))){
+//                     tabuleiro.setJogadorAtual('O');
+//                     posicoes.set(position, "X");
+//
+//                     String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
+//                     tabuleiro.setJogoPosicoes(posicoesAtualizadas);
+//
+//                     tabuleiroRepository.save(tabuleiro);
+//                     return "Entrou no if do X";
+//
+//                 }
+//
+//                 else if(jogada == position && jogadorAtual == 'O' && "n".equals(posicoes.get(position))){
+//
+//                     posicoes.set(position, "O");
+//                     tabuleiro.setJogadorAtual('X');
+//                     String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
+//                     tabuleiro.setJogoPosicoes(posicoesAtualizadas);
+//                     tabuleiroRepository.save(tabuleiro);
+//                     return "Entro no if do bola";
+//
+//                 }
+//
+//             }
+//             Gson transformadorDeListaEmString = new Gson();
+//             String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
+//             tabuleiro.setJogoPosicoes(posicoesAtualizadas);
+//             tabuleiroRepository.save(tabuleiro);
 
 
             // verifica os ganhadores percorrendo as combinações de vitória
-             for(List<Integer> combinacao : combinacoes){
-                 for(Integer combinacaoPosicao: combinacao){
-                     if(posicoes.get(combinacaoPosicao).equals("X")){
-                         vencedor = 'X';
-                     }
-                 }
-             }
 
-             for(List<Integer> combinacao : combinacoes){
-                 for(Integer combinacaoPosicao: combinacao){
-                     if(posicoes.get(combinacaoPosicao).equals("O")){
-                         vencedor = 'O';
-                     }
-                 }
-             }
-
-
-
-
-
-
-
-
-//             for(String[] j : jogoDaVelha){
-//                 for(String linha : j){
-//                     if(linha.equals("n") && jogada == 0){
-//                         linha = "X";
-//
+//             for(List<Integer> combinacao : combinacoes){
+//                 for(Integer combinacaoPosicao: combinacao){
+//                     if(posicoes.get(combinacaoPosicao).equals("X")){
+//                         vencedor = 'X';
 //                     }
 //                 }
-//
 //             }
-
-//             for(String posicao : posicoes){
-//                 if(posicao.equals("n") && tabuleiro.getJogadorAtual() == 'X' && jogada == 0){
 //
-//                 }
-//                 else{
-//                     return "Posição ja ocupada";
+//             for(List<Integer> combinacao : combinacoes){
+//                 for(Integer combinacaoPosicao: combinacao){
+//                     if(posicoes.get(combinacaoPosicao).equals("O")){
+//                         vencedor = 'O';
+//                     }
 //                 }
 //             }
 
-//             if (jogada == 0) {
+//             for (int i = 0; i < jogoDaVelha.length; i++) {
+//                 for (int j = 0; j < jogoDaVelha.length; j++) {
+//                     jogoDaVelha[i][j] = jogo[j];
+//                     posicoes.add(jogo[j]);
+//                 }
+//             }
 //
-//                 if (jogoDaVelha[0][0].equals("n")) {
 //
-//                     jogoDaVelha[0][0] = "X";
-//                     tabuleiro.setJogoPosicoes("[X, n, n, n, n, n, n, n]");
+//
+//
+//             for(Integer position : posicoesNumeradas){
+//
+//                 if(jogada == position && jogadorAtual == 'X' && posicoes.get(jogada).equals("n")){
 //                     tabuleiro.setJogadorAtual('O');
+//                     posicoes.set(position, "X");
+//
 //                     tabuleiroRepository.save(tabuleiro);
-//                     return tabuleiro.getJogoPosicoes();
 //
 //                 }
 //
+//                 else if(jogada == position && jogadorAtual == 'O' && posicoes.get(jogada).equals("n")){
+//
+//                     posicoes.set(position, "O");
+//                     tabuleiro.setJogadorAtual('X');
+//                     tabuleiroRepository.save(tabuleiro);
+//
+//                 }
 //
 //             }
-
-//            while(contador != 0){
-
-//                tabuleiro.setJogadorAtual('X');
-//                char jogadorAtual = tabuleiro.getJogadorAtual();
+//             Gson transformadorDeListaEmString = new Gson();
+//             String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
+//             tabuleiro.setJogoPosicoes(posicoesAtualizadas);
+//             tabuleiroRepository.save(tabuleiro);
 //
 //
-//                if(jogada == 0 && jogadorAtual == 'X'){
-//                    if(posicoes.get(0).equals("n")){
-//                        posicoes.set(0, "X");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
 //
-//                if(jogada == 1 && jogadorAtual == 'X'){
-//                    if(posicoes.get(1).equals("n")){
-//                        posicoes.set(1, "X");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 2 && jogadorAtual == 'X'){
-//                    if(posicoes.get(2).equals("n")){
-//                        posicoes.set(2, "X");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 3 && jogadorAtual == 'X'){
-//                    if(posicoes.get(3).equals("n")){
-//                        posicoes.set(3, "X");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 4 && jogadorAtual == 'X'){
-//                    if(posicoes.get(4).equals("n")){
-//                        posicoes.set(4, "X");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 5 && jogadorAtual == 'X'){
-//                    if(posicoes.get(5).equals("n")){
-//                        posicoes.set(5, "X");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 6 && jogadorAtual == 'X'){
-//                    if(posicoes.get(6).equals("n")){
-//                        posicoes.set(6, "X");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 7 && jogadorAtual == 'X'){
-//                    if(posicoes.get(7).equals("n")){
-//                        posicoes.set(7, "X");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 8 && jogadorAtual == 'X'){
-//                    if(posicoes.get(8).equals("n")){
-//                        posicoes.set(8, "X");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                contador -= 1;
-//
-//                tabuleiro.setJogadorAtual('O');
-//                char outroJogador = tabuleiro.getJogadorAtual();
-//
-//                if(jogada == 0 && outroJogador == 'O'){
-//                    if(posicoes.get(0).equals("n")){
-//                        posicoes.set(0, "O");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 1 && outroJogador == 'O'){
-//                    if(posicoes.get(1).equals("n")){
-//                        posicoes.set(1, "O");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 2 && outroJogador == 'O'){
-//                    if(posicoes.get(2).equals("n")){
-//                        posicoes.set(2, "O");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 3 && outroJogador == 'O'){
-//                    if(posicoes.get(3).equals("n")){
-//                        posicoes.set(3, "O");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 4 && outroJogador == 'O'){
-//                    if(posicoes.get(4).equals("n")){
-//                        posicoes.set(4, "O");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 5 && outroJogador == 'O'){
-//                    if(posicoes.get(5).equals("n")){
-//                        posicoes.set(5, "O");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 6 && outroJogador == 'O'){
-//                    if(posicoes.get(6).equals("n")){
-//                        posicoes.set(6, "O");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 7 && outroJogador == 'O'){
-//                    if(posicoes.get(7).equals("n")){
-//                        posicoes.set(7, "O");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-//
-//                if(jogada == 8 && outroJogador == 'O'){
-//                    if(posicoes.get(8).equals("n")){
-//                        posicoes.set(8, "O");
-//                    }
-//                    else{
-//                        return "Não aceitamos esse valor";
-//                    }
-//                }
-
-
-//            }
-
-
-
-         } catch (Exception e) {
-             System.out.println(e.getMessage());
-
-         }
-         return posicoes;
-     }
 
 
 
 
 
-
-
-//         char[][] jogoDaVelha = new char[3][3];
-//
-//         for (int i = 0; i < jogoDaVelha.length; i++) {
-//             for (int j = 0; j < jogoDaVelha.length; j++) {
-//                 jogoDaVelha[i][j] = ' ';
-//             }
-//         }
-
-    //     while(naoTemVencedor(jogoDaVelha)){
-
-    //         System.out.print("Vez de X: ");
-            
-    //         if (posicao == 0) {
-    
-    //             if(jogoDaVelha[0][0] == ' '){
-    //                 jogoDaVelha[0][0] = 'X';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                   
-    //             }
-                
-                
-    //         } else if (posicao == 1) {
-    
-    //             if(jogoDaVelha[0][1] == ' '){
-    //                 jogoDaVelha[0][1] = 'X';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-    //              ;
-    //             }
-    
-                
-    //         } else if (posicao == 2) {
-    
-    //             if(jogoDaVelha[0][2] == ' '){
-    //                 jogoDaVelha[0][2] = 'X';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                   
-    //             }
-                
-    //         } else if (posicao == 3) {
-    
-    //             if(jogoDaVelha[1][0] == ' '){
-    //                 jogoDaVelha[1][0] = 'X';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                   
-    //             }
-                
-    //         } else if (posicao == 4) {
-    //             if(jogoDaVelha[1][1] == ' '){
-    //                 jogoDaVelha[1][1] = 'X';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                   
-    //             }
-    
-    
-    //         } else if (posicao == 5) {
-    //             if(jogoDaVelha[1][2] == ' '){
-    //                 jogoDaVelha[1][2] = 'X';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                   
-    //             }
-    //         } else if (posicao == 6) {
-    //             if(jogoDaVelha[2][0] == ' '){
-    //                 jogoDaVelha[2][0] = 'X';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                   
-    //             }
-    
-                
-    //         } else if (posicao == 7) {
-    //             if(jogoDaVelha[2][1] == ' '){
-    //                 jogoDaVelha[2][1] = 'X';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-    //             }
-    //         }
-                   
-    //         else if (posicao == 8) {
-    //             if(jogoDaVelha[2][2] == ' '){
-    //                 jogoDaVelha[2][2] = 'X';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                    
-    //             }
-    //         }
-    
-
-    
-    
-    //         System.out.print("Vez de O: ");
-    //         int posicaoBola = posicao;
-           
-    //         if (posicaoBola == 0) {
-    
-    //             if(jogoDaVelha[0][0] == ' '){
-    //                 jogoDaVelha[0][0] = 'O';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                  
-                    
-    //             }
-                
-    //         } else if (posicaoBola == 1) {
-    //             if(jogoDaVelha[0][1] == ' '){
-    //                 jogoDaVelha[0][1] = 'O';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                    
-                    
-    //             }
-    
-                
-    //         } else if (posicaoBola == 2) {
-    //             if(jogoDaVelha[0][2] == ' '){
-    //                 jogoDaVelha[0][2] = 'O';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                   
-                    
-    //             }
-    //         } else if (posicaoBola == 3) {
-    //             if(jogoDaVelha[1][0] == ' '){
-    //                 jogoDaVelha[1][0] = 'O';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                    
-                    
-    //             }
-    //         } else if (posicaoBola == 4) {
-    //             if(jogoDaVelha[1][1] == ' '){
-    //                 jogoDaVelha[1][1] = 'O';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                    
-                    
-    //             }
-    //         } else if (posicaoBola == 5) {
-    //             if(jogoDaVelha[1][2] == ' '){
-    //                 jogoDaVelha[1][2] = 'O';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                    
-                    
-    //             }
-    //         } else if (posicaoBola == 6) {
-    //             if(jogoDaVelha[2][0] == ' '){
-    //                 jogoDaVelha[2][0] = 'O';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                    
-                    
-    //             }
-    //         } else if (posicaoBola == 7) {
-    //             if(jogoDaVelha[2][1] == ' '){
-    //                 jogoDaVelha[2][1] = 'O';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                    
-                    
-    //             }
-    //         } else if (posicaoBola == 8) {
-    //             if(jogoDaVelha[2][2] == ' '){
-    //                 jogoDaVelha[2][2] = 'O';
-    
-    //             }
-    //             else{
-    //                 System.out.println("Posição ja ocupada");
-                    
-                    
-    //             }
-    //         }
-            
-    //     }
-    // }
 
 //    public boolean naoTemVencedor(String[][] matriz) {
 //        if (matriz[0][0].equals("X") && matriz[0][1].equals("X") && matriz[0][2].equals("X")) {
@@ -644,7 +340,34 @@ public class JogoDaVelhaService {
 //    }
 
 
-    public List<List<Integer>> gerarCombinacoes(){
+
+
+
+//    public String listaDePosicoes(Long id){
+//        Tabuleiro tabuleiro = tabuleiroAtual(id);
+//        return tabuleiro.getJogoPosicoes();
+//    }
+
+    return jogo;
+    }
+
+    private List<Integer> gerarPosicoesDoTabuleiro () {
+
+        List<Integer> posicoesNumeradas = new ArrayList<>();
+        posicoesNumeradas.add(0);
+        posicoesNumeradas.add(1);
+        posicoesNumeradas.add(2);
+        posicoesNumeradas.add(3);
+        posicoesNumeradas.add(4);
+        posicoesNumeradas.add(5);
+        posicoesNumeradas.add(6);
+        posicoesNumeradas.add(7);
+        posicoesNumeradas.add(8);
+
+        return posicoesNumeradas;
+    }
+
+    public List<List<Integer>> gerarCombinacoes () {
         List<List<Integer>> combinacoes = new ArrayList<>();
 
         List<Integer> combinacaoPrimeiraLinha = new ArrayList<>();
@@ -700,22 +423,9 @@ public class JogoDaVelhaService {
 
     }
 
-    public List<Integer> gerarPosicoesDoTabuleiro(){
-
-        List<Integer> posicoesNumeradas = new ArrayList<>();
-        posicoesNumeradas.add(0);
-        posicoesNumeradas.add(1);
-        posicoesNumeradas.add(2);
-        posicoesNumeradas.add(3);
-        posicoesNumeradas.add(4);
-        posicoesNumeradas.add(5);
-        posicoesNumeradas.add(6);
-        posicoesNumeradas.add(7);
-        posicoesNumeradas.add(8);
-
-        return posicoesNumeradas;
-    }
-
 
 
 }
+
+
+
