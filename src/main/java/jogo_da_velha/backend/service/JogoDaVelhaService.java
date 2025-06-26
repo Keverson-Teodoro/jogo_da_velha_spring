@@ -77,26 +77,9 @@ public class JogoDaVelhaService {
         String [] posicoesDoTabuleiro = tabuleiro.getJogoPosicoes();
 
 
-//        String posicoesSemColchetes = tabuleiro.getJogoPosicoes().replace("[", "")
-//                .replace("]", "").replace("\"", "");
-//
-//        String[] jogo = posicoesSemColchetes.split(", \\s*");
-
-//        String[] jogoCorrigido = new String[9];
-//        for (int i = 0; i < jogo.length; i++) {
-//            jogoCorrigido[i] = jogo[i];
-//        }
-//        for (int i = 0; i < jogo.length; i++) {
-//            jogoCorrigido[i] = "";
-//            jogo[i] = " ";
-//        }
-
-
-
-
 //        String[] jogo = {" ", " ", " ", " ", " ", " ", " ", " ", " "};
 
-        while (naoTemVencedor(id)){
+        while (naoTemVencedor(id, posicoesDoTabuleiro)){
             for (Integer posi : posicoesNumeradas) {
 
                 if (jogada == posi && jogadorAtual == 'O' && posicoesDoTabuleiro[posi] == null) {
@@ -154,277 +137,6 @@ public class JogoDaVelhaService {
 //
 //        }
 
-//        for(List<Integer> combinacao : combinacoes){
-//            for(Integer casa : combinacao){
-//                for (int i = 0; i < posicoesDoTabuleiro.length; i++) {
-//                    if(posicoesDoTabuleiro[casa] == "X"){
-//                        vencedor = "X";
-//                    }
-//                }
-//            }
-//        }
-//
-//        for(List<Integer> combinacao : combinacoes){
-//            for(Integer casa : combinacao){
-//                for (int i = 0; i < posicoesDoTabuleiro.length; i++) {
-//                    if(posicoesDoTabuleiro[casa] == "O"){
-//                        vencedor = "O";
-//                    }
-//                }
-//            }
-//        }
-
-//        for(List<Integer> combinacao : combinacoes){
-//            for(Integer combinacaoPosicao: combinacao){
-//                if(posicoes.get(combinacaoPosicao).equals("X")){
-//                    vencedor = "X";
-//                }
-//            }
-//        }
-//
-//        for(List<Integer> combinacao : combinacoes){
-//            for(Integer combinacaoPosicao: combinacao){
-//                if(posicoes.get(combinacaoPosicao).equals("O")){
-//                    vencedor = "X";
-//                }
-//            }
-//        }
-
-//        for(List<Integer> combinacao : combinacoes){
-//            for(Integer combinacaoPosicao: combinacao){
-//                if(posicoes.get(combinacaoPosicao).equals("X")){
-//                    vencedor = "X";
-//                }
-//            }
-//        }
-//
-//        for(List<Integer> combinacao : combinacoes){
-//            for(Integer combinacaoPosicao: combinacao){
-//                if(posicoes.get(combinacaoPosicao).equals("O")){
-//                    vencedor = "X";
-//                }
-//            }
-//        }
-
-
-//            jogoDaVelha = new String[3][3];
-//             for (int i = 0; i < jogoDaVelha.length; i++) {
-//                 for (int j = 0; j < jogoDaVelha.length; j++) {
-//                     jogoDaVelha[i][j] = jogo[j];
-//                     posicoes.add(jogo[j]);
-//                 }
-//             }
-
-//         for (int i = 0; i < posicoesNumeradas.size(); i++) {
-//             posicoes.add(jogo[i]);
-//         }
-
-//         if(jogada == 2 && jogo[jogada].isBlank() && jogadorAtual == 'X' ){
-//             jogo[jogada] = "X";
-//             tabuleiro.setJogadorAtual('O');
-//             String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
-//             tabuleiro.setJogoPosicoes(posicoesAtualizadas);
-//             tabuleiroRepository.save(tabuleiro);
-//
-//         }
-
-
-//             if(jogada == 1 && jogadorAtual == 'X' && posicoes.get(jogada).equals("null")){
-//                 posicoes.add(1, "X");
-//                 tabuleiro.setJogadorAtual('O');
-//                 String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
-//                 tabuleiro.setJogoPosicoes(posicoesAtualizadas);
-//                 tabuleiroRepository.save(tabuleiro);
-//                 return "caiu no if do X";
-//             }
-
-//             else if(jogada == 0 && jogadorAtual == 'O' && posicoes.get(jogada).equals("null")){
-//                 posicoes.add("O");
-//                 tabuleiro.setJogadorAtual('X');
-//                 String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
-//                 tabuleiro.setJogoPosicoes(posicoesAtualizadas);
-//                 tabuleiroRepository.save(tabuleiro);
-//             }
-
-//             for (Integer posi : posicoesNumeradas){
-//                 if(jogada == 0 && jogadorAtual == 'X' && posicoes.get(jogada).equals("n")){
-//                     posicoes.set(jogada, "X");
-//                     tabuleiro.setJogadorAtual('O');
-//                     String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
-//                     tabuleiro.setJogoPosicoes(posicoesAtualizadas);
-//                     tabuleiroRepository.save(tabuleiro);
-//                     return "caiu no if do X";
-//                 }
-//
-//                 if(jogada == 0 && jogadorAtual == 'O' && posicoes.get(jogada).equals("n")){
-//                     posicoes.set(jogada, "O");
-//                     tabuleiro.setJogadorAtual('X');
-//                     String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
-//                     tabuleiro.setJogoPosicoes(posicoesAtualizadas);
-//                     tabuleiroRepository.save(tabuleiro);
-//                     return "caiu no if do bola";
-//                 }
-//
-//
-//             }
-
-//
-//
-//
-//             for(Integer position : posicoesNumeradas){
-//
-//                 if(jogada == position && jogadorAtual == 'X' && "n".equals(posicoes.get(position))){
-//                     tabuleiro.setJogadorAtual('O');
-//                     posicoes.set(position, "X");
-//
-//                     String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
-//                     tabuleiro.setJogoPosicoes(posicoesAtualizadas);
-//
-//                     tabuleiroRepository.save(tabuleiro);
-//                     return "Entrou no if do X";
-//
-//                 }
-//
-//                 else if(jogada == position && jogadorAtual == 'O' && "n".equals(posicoes.get(position))){
-//
-//                     posicoes.set(position, "O");
-//                     tabuleiro.setJogadorAtual('X');
-//                     String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
-//                     tabuleiro.setJogoPosicoes(posicoesAtualizadas);
-//                     tabuleiroRepository.save(tabuleiro);
-//                     return "Entro no if do bola";
-//
-//                 }
-//
-//             }
-//             Gson transformadorDeListaEmString = new Gson();
-//             String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
-//             tabuleiro.setJogoPosicoes(posicoesAtualizadas);
-//             tabuleiroRepository.save(tabuleiro);
-
-
-
-
-
-
-
-//             for (int i = 0; i < jogoDaVelha.length; i++) {
-//                 for (int j = 0; j < jogoDaVelha.length; j++) {
-//                     jogoDaVelha[i][j] = jogo[j];
-//                     posicoes.add(jogo[j]);
-//                 }
-//             }
-//
-//
-//
-//
-//             for(Integer position : posicoesNumeradas){
-//
-//                 if(jogada == position && jogadorAtual == 'X' && posicoes.get(jogada).equals("n")){
-//                     tabuleiro.setJogadorAtual('O');
-//                     posicoes.set(position, "X");
-//
-//                     tabuleiroRepository.save(tabuleiro);
-//
-//                 }
-//
-//                 else if(jogada == position && jogadorAtual == 'O' && posicoes.get(jogada).equals("n")){
-//
-//                     posicoes.set(position, "O");
-//                     tabuleiro.setJogadorAtual('X');
-//                     tabuleiroRepository.save(tabuleiro);
-//
-//                 }
-//
-//             }
-//             Gson transformadorDeListaEmString = new Gson();
-//             String posicoesAtualizadas = transformadorDeListaEmString.toJson(posicoes);
-//             tabuleiro.setJogoPosicoes(posicoesAtualizadas);
-//             tabuleiroRepository.save(tabuleiro);
-//
-//
-//
-
-
-
-
-
-
-//    public boolean naoTemVencedor(String[][] matriz) {
-//        if (matriz[0][0].equals("X") && matriz[0][1].equals("X") && matriz[0][2].equals("X")) {
-//            return false;
-//        }
-//        if (matriz[1][0].equals("X") && matriz[1][1].equals("X") && matriz[1][2].equals("X")) {
-//            return false;
-//        }
-//
-//        if (matriz[2][0].equals("X") && matriz[2][1].equals("X") && matriz[2][2].equals("X")) {
-//            return false;
-//        }
-//
-//        if (matriz[0][0].contains("X") && matriz[1][1].contains("X") && matriz[2][2].contains("X")) {
-//            return false; // diagonal
-//        }
-//
-//        if (matriz[0][2].equals("X") && matriz[1][1].equals("X") && matriz[0][0].contains("X")) {
-//            return false; // diagonal
-//        }
-//
-//        if (matriz[0][2].equals("X") && matriz[1][2].contains("X") && matriz[2][2].contains("X")) {
-//            return false;
-//        }
-//
-//        if (matriz[0][1].contains("X") && matriz[1][1].contains("X") && matriz[2][1].contains("X")) {
-//            return false;
-//        }
-//
-//        if (matriz[0][0] == 'X' && matriz[1][0] == 'X' && matriz[2][0] == 'X') {
-//            return false;
-//        }
-//
-//        if (matriz[0][0] == 'O' && matriz[0][1] == 'O' && matriz[0][2] == 'O') {
-//            return false;
-//        }
-//        if (matriz[1][0] == 'O' && matriz[1][1] == 'O' && matriz[1][2] == 'O') {
-//            return false;
-//        }
-//
-//        if (matriz[2][0] == 'O' && matriz[2][1] == 'O' && matriz[2][2] == 'O') {
-//            return false;
-//        }
-//
-//        if (matriz[0][0] == 'O' && matriz[1][1] == 'O' && matriz[2][2] == 'O') {
-//            return false; // diagonal
-//        }
-//
-//        if (matriz[0][2] == 'O' && matriz[1][1] == 'O' && matriz[0][0] == 'O') {
-//            return false; // diagonal
-//        }
-//
-//        if (matriz[0][2] == 'O' && matriz[1][2] == 'O' && matriz[2][2] == 'O') {
-//            return false;
-//        }
-//
-//        if (matriz[0][1] == 'O' && matriz[1][1] == 'O' && matriz[2][1] == 'O') {
-//            return false;
-//        }
-//
-//        if (matriz[0][0] == 'O' && matriz[1][0] == 'O' && matriz[2][0] == 'O') {
-//            return false;
-//        }
-//
-//        return true;
-//
-//    }
-
-
-
-
-
-//    public String listaDePosicoes(Long id){
-//        Tabuleiro tabuleiro = tabuleiroAtual(id);
-//        return tabuleiro.getJogoPosicoes();
-//    }
 
     return vencedor;
     }
@@ -502,36 +214,139 @@ public class JogoDaVelhaService {
 
     }
 
-    public boolean naoTemVencedor(Long id){
+//    public boolean naoTemVencedor(Long id, String[] jogo){
+//
+//        List<List<Integer>> combinacoes = gerarCombinacoes();
+//        Tabuleiro tabuleiro1 = tabuleiroAtual(id);
+//        String[] jogoDaVelha = tabuleiro1.getJogoPosicoes();
+//
+//
+//
+//
+//
+//        return true;
+//    }
+
+    public boolean naoTemVencedor(Long id, String[] jogo){
 
         List<List<Integer>> combinacoes = gerarCombinacoes();
         Tabuleiro tabuleiro1 = tabuleiroAtual(id);
-        String[] jogoDaVelha = tabuleiro1.getJogoPosicoes();
 
         for(List<Integer> combinacao : combinacoes){
             for(Integer casa : combinacao){
-                for (int i = 0; i < jogoDaVelha.length; i++) {
-                    if(jogoDaVelha[casa] == "X"){
-                        tabuleiro1.setJogadorAtual('X');
+                for (int i = 0; i < jogo.length; i++) {
+                    if(jogo[casa] == "X"){
+
+                        tabuleiroRepository.save(tabuleiro1);
                         return false;
+                    }
+                    else {
+                        if(jogo[casa] == "O"){
+                            tabuleiroRepository.save(tabuleiro1);
+                            return false;
+                        }
                     }
                 }
             }
         }
 
-        for(List<Integer> combinacao : combinacoes){
-            for(Integer casa : combinacao){
-                for (int i = 0; i < jogoDaVelha.length; i++) {
-                    if(jogoDaVelha[casa] == "O"){
-                        tabuleiro1.setJogadorAtual('O');
-                        return false;
 
-                    }
-                }
-            }
-        }
         return true;
     }
+
+//    public boolean naoTemVencedor(Long id, String[] jogo){
+//
+//        List<List<Integer>> combinacoes = gerarCombinacoes();
+//        Tabuleiro tabuleiro1 = tabuleiroAtual(id);
+//
+//        for(List<Integer> combinacao : combinacoes){
+//            for(Integer casa : combinacao){
+//                for (int i = 0; i < jogo.length; i++) {
+//                    if(jogo[casa] == "X"){
+//
+//                        tabuleiroRepository.save(tabuleiro1);
+//                        return false;
+//                    }
+//                    else {
+//                        if(jogo[casa] == "O"){
+//                            tabuleiroRepository.save(tabuleiro1);
+//                            return false;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//
+//        return true;
+//    }
+
+
+//    public boolean naoTemVencedor(Long id, String[] jogo){
+//
+//        List<List<Integer>> combinacoes = gerarCombinacoes();
+//        Tabuleiro tabuleiro1 = tabuleiroAtual(id);
+////        String[] jogoDaVelha = tabuleiro1.getJogoPosicoes();
+//
+//
+//
+//        for(List<Integer> combinacao : combinacoes){
+//            for(Integer casa : combinacao){
+//                for (int i = 0; i < jogo.length; i++) {
+//                    if(jogo[casa] == "X"){
+//
+//                        tabuleiroRepository.save(tabuleiro1);
+//                        return false;
+//                    }
+//                }
+//            }
+//        }
+//
+//        for(List<Integer> combinacao : combinacoes){
+//            for(Integer casa : combinacao){
+//                for (int i = 0; i < jogo.length; i++) {
+//                    if(jogo[casa] == "O"){
+//
+//                        tabuleiroRepository.save(tabuleiro1);
+//                        return false;
+//                    }
+//                }
+//            }
+//        }
+//        return true;
+//    }
+
+//    public boolean naoTemVencedor(Long id){
+//
+//        List<List<Integer>> combinacoes = gerarCombinacoes();
+//        Tabuleiro tabuleiro1 = tabuleiroAtual(id);
+//        String[] jogoDaVelha = tabuleiro1.getJogoPosicoes();
+//
+//        for(List<Integer> combinacao : combinacoes){
+//            for(Integer casa : combinacao){
+//                for (int i = 0; i < jogoDaVelha.length; i++) {
+//                    if(jogoDaVelha[casa] == "X"){
+//                        tabuleiro1.setJogadorAtual('X');
+//                        tabuleiroRepository.save(tabuleiro1);
+//                        return false;
+//                    }
+//                }
+//            }
+//        }
+//
+//        for(List<Integer> combinacao : combinacoes){
+//            for(Integer casa : combinacao){
+//                for (int i = 0; i < jogoDaVelha.length; i++) {
+//                    if(jogoDaVelha[casa] == "O"){
+//                        tabuleiro1.setJogadorAtual('O');
+//                        tabuleiroRepository.save(tabuleiro1);
+//                        return false;
+//                    }
+//                }
+//            }
+//        }
+//        return true;
+//    }
 
 
 

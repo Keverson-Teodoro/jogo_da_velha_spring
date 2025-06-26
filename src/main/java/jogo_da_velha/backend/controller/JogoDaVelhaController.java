@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import jogo_da_velha.backend.service.JogoDaVelhaService;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,11 +35,12 @@ public class JogoDaVelhaController {
 
     @GetMapping("jogar/{id}/{jogada}")
     public String jogada(@PathVariable Long id, @PathVariable int jogada) {
+
+
         jogoDaVelhaService.jogoDaVelha(id, jogada);
+        Tabuleiro tabuleiro = jogoDaVelhaService.tabuleiroAtual(id);
 
-
-
-        return "Vencedor" + ;
+        return Arrays.toString(tabuleiro.getJogoPosicoes()) + " Vencedor: " + tabuleiro.getJogadorAtual();
 
 
     }
