@@ -57,11 +57,11 @@ public class JogoDaVelhaService {
         return tabuleiroRepository.getReferenceById(id);
     }
 
-    public String[] jogoDaVelha(long id, int jogada) {
+    public String jogoDaVelha(long id, int jogada) {
 
 
         Tabuleiro tabuleiro = tabuleiroRepository.getReferenceById(id);
-        char vencedor = ' ';
+        String vencedor = " ";
         char jogadorAtual = tabuleiro.getJogadorAtual();
 
 
@@ -101,7 +101,6 @@ public class JogoDaVelhaService {
             if (jogada == posi && jogadorAtual == 'O' && posicoesDoTabuleiro[posi] == null) {
                 posicoesDoTabuleiro[posi] = "O";
                 tabuleiro.setJogadorAtual('X');
-//                String posicoesAtualizadas = transformadorDeListaEmString.toJson(po);
                 tabuleiro.setJogoPosicoes(posicoesDoTabuleiro);
                 tabuleiroRepository.save(tabuleiro);
 
@@ -109,13 +108,64 @@ public class JogoDaVelhaService {
             else if(jogada == posi && jogadorAtual == 'X' && posicoesDoTabuleiro[posi] == null){
                 posicoesDoTabuleiro[posi] = "X";
                 tabuleiro.setJogadorAtual('O');
-//                String posicoesAtualizadas = transformadorDeListaEmString.toJson(jogo);
                 tabuleiro.setJogoPosicoes(posicoesDoTabuleiro);
                 tabuleiroRepository.save(tabuleiro);
             }
 
 
         }
+
+//        for(List<Integer> combinacao : combinacoes){
+//            for(Integer casa : combinacao){
+//                for (int i = 0; i < posicoesDoTabuleiro.length; i++) {
+//                    if(posicoesDoTabuleiro[casa] == "X"){
+//                        vencedor = "X";
+//                    }
+//                }
+//            }
+//        }
+//
+//        for(List<Integer> combinacao : combinacoes){
+//            for(Integer casa : combinacao){
+//                for (int i = 0; i < posicoesDoTabuleiro.length; i++) {
+//                    if(posicoesDoTabuleiro[casa] == "O"){
+//                        vencedor = "O";
+//                    }
+//                }
+//            }
+//        }
+
+//        for(List<Integer> combinacao : combinacoes){
+//            for(Integer combinacaoPosicao: combinacao){
+//                if(posicoes.get(combinacaoPosicao).equals("X")){
+//                    vencedor = "X";
+//                }
+//            }
+//        }
+//
+//        for(List<Integer> combinacao : combinacoes){
+//            for(Integer combinacaoPosicao: combinacao){
+//                if(posicoes.get(combinacaoPosicao).equals("O")){
+//                    vencedor = "X";
+//                }
+//            }
+//        }
+
+//        for(List<Integer> combinacao : combinacoes){
+//            for(Integer combinacaoPosicao: combinacao){
+//                if(posicoes.get(combinacaoPosicao).equals("X")){
+//                    vencedor = "X";
+//                }
+//            }
+//        }
+//
+//        for(List<Integer> combinacao : combinacoes){
+//            for(Integer combinacaoPosicao: combinacao){
+//                if(posicoes.get(combinacaoPosicao).equals("O")){
+//                    vencedor = "X";
+//                }
+//            }
+//        }
 
 
 //            jogoDaVelha = new String[3][3];
@@ -214,23 +264,10 @@ public class JogoDaVelhaService {
 //             tabuleiroRepository.save(tabuleiro);
 
 
-            // verifica os ganhadores percorrendo as combinações de vitória
 
-//             for(List<Integer> combinacao : combinacoes){
-//                 for(Integer combinacaoPosicao: combinacao){
-//                     if(posicoes.get(combinacaoPosicao).equals("X")){
-//                         vencedor = 'X';
-//                     }
-//                 }
-//             }
-//
-//             for(List<Integer> combinacao : combinacoes){
-//                 for(Integer combinacaoPosicao: combinacao){
-//                     if(posicoes.get(combinacaoPosicao).equals("O")){
-//                         vencedor = 'O';
-//                     }
-//                 }
-//             }
+
+
+
 
 //             for (int i = 0; i < jogoDaVelha.length; i++) {
 //                 for (int j = 0; j < jogoDaVelha.length; j++) {
@@ -350,7 +387,7 @@ public class JogoDaVelhaService {
 //        return tabuleiro.getJogoPosicoes();
 //    }
 
-    return tabuleiro.getJogoPosicoes();
+    return vencedor;
     }
 
     private List<Integer> gerarPosicoesDoTabuleiro () {

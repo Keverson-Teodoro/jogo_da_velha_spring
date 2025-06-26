@@ -33,10 +33,10 @@ public class JogoDaVelhaController {
     }
 
     @GetMapping("jogar/{id}/{jogada}")
-    public String[] jogada(@PathVariable Long id, @PathVariable int jogada) {
+    public String jogada(@PathVariable Long id, @PathVariable int jogada) {
 
 
-        return jogoDaVelhaService.jogoDaVelha(id, jogada);
+        return "Vencedor" + jogoDaVelhaService.jogoDaVelha(id, jogada);
 
 
     }
