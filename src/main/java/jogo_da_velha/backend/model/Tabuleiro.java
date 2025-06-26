@@ -5,16 +5,16 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "tabuleiro")
+@Table(name = "tabuleirodois")
 public class Tabuleiro {
 
     @Id
-    @Column(name="id_jogada")
+    @Column(name="id_tabuleirodois")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idJogo;
 
-    @Column(name = "jogo_posicoes")
-    private String jogoPosicoes;
+    @Column(name = "jogadas")
+    private String[] jogoPosicoes;
 
     @Column(name = "jogador_atual")
     private char jogadorAtual;
@@ -31,11 +31,11 @@ public class Tabuleiro {
         this.idJogo = idJogo;
     }
 
-    public String getJogoPosicoes() {
+    public String[] getJogoPosicoes() {
         return jogoPosicoes;
     }
 
-    public void setJogoPosicoes(String jogoPosicoes) {
+    public void setJogoPosicoes(String[] jogoPosicoes) {
         this.jogoPosicoes = jogoPosicoes;
     }
 

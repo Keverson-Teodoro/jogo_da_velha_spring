@@ -37,13 +37,13 @@ public class JogoDaVelhaService {
     public Long iniciarJogo() {
         Tabuleiro tabuleiro = new Tabuleiro();
 
-        List<String> posicoes = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            posicoes.add(null);
-
+        String[] posicoes = new String[9];
+        for (String posicao : posicoes){
+            posicao = " ";
         }
 
-        tabuleiro.setJogoPosicoes("[n, n, n, n, n, n, n, n, n]");
+
+        tabuleiro.setJogoPosicoes(posicoes);
 
 
         tabuleiro.setJogadorAtual('X');
@@ -74,11 +74,13 @@ public class JogoDaVelhaService {
         String[][] jogoDaVelha = new String[3][3];
         List<String> teste = new ArrayList<>();
 
+        String [] posicoesDoTabuleiro = tabuleiro.getJogoPosicoes();
 
-        String posicoesSemColchetes = tabuleiro.getJogoPosicoes().replace("[", "")
-                .replace("]", "").replace("\"", "");
 
-        String[] jogo = posicoesSemColchetes.split(", \\s*");
+//        String posicoesSemColchetes = tabuleiro.getJogoPosicoes().replace("[", "")
+//                .replace("]", "").replace("\"", "");
+//
+//        String[] jogo = posicoesSemColchetes.split(", \\s*");
 
 //        String[] jogoCorrigido = new String[9];
 //        for (int i = 0; i < jogo.length; i++) {
@@ -96,19 +98,19 @@ public class JogoDaVelhaService {
 
         for (Integer posi : posicoesNumeradas) {
 
-            if (jogada == posi && jogadorAtual == 'O' && jogo[posi].equals(" ")) {
-                jogo[posi] = "O";
+            if (jogada == posi && jogadorAtual == 'O' && posicoesDoTabuleiro[posi] == null) {
+                posicoesDoTabuleiro[posi] = "O";
                 tabuleiro.setJogadorAtual('X');
-                String posicoesAtualizadas = transformadorDeListaEmString.toJson(jogo);
-                tabuleiro.setJogoPosicoes(posicoesAtualizadas);
+//                String posicoesAtualizadas = transformadorDeListaEmString.toJson(po);
+                tabuleiro.setJogoPosicoes(posicoesDoTabuleiro);
                 tabuleiroRepository.save(tabuleiro);
 
             }
-            else if(jogada == posi && jogadorAtual == 'X' && jogo[posi].equals(" ")){
-                jogo[posi] = "X";
+            else if(jogada == posi && jogadorAtual == 'X' && posicoesDoTabuleiro[posi] == null){
+                posicoesDoTabuleiro[posi] = "X";
                 tabuleiro.setJogadorAtual('O');
-                String posicoesAtualizadas = transformadorDeListaEmString.toJson(jogo);
-                tabuleiro.setJogoPosicoes(posicoesAtualizadas);
+//                String posicoesAtualizadas = transformadorDeListaEmString.toJson(jogo);
+                tabuleiro.setJogoPosicoes(posicoesDoTabuleiro);
                 tabuleiroRepository.save(tabuleiro);
             }
 
@@ -116,7 +118,7 @@ public class JogoDaVelhaService {
         }
 
 
-            jogoDaVelha = new String[3][3];
+//            jogoDaVelha = new String[3][3];
 //             for (int i = 0; i < jogoDaVelha.length; i++) {
 //                 for (int j = 0; j < jogoDaVelha.length; j++) {
 //                     jogoDaVelha[i][j] = jogo[j];
@@ -348,7 +350,7 @@ public class JogoDaVelhaService {
 //        return tabuleiro.getJogoPosicoes();
 //    }
 
-    return jogo;
+    return tabuleiro.getJogoPosicoes();
     }
 
     private List<Integer> gerarPosicoesDoTabuleiro () {
