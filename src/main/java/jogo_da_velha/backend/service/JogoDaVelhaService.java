@@ -96,24 +96,63 @@ public class JogoDaVelhaService {
 
 //        String[] jogo = {" ", " ", " ", " ", " ", " ", " ", " ", " "};
 
-        for (Integer posi : posicoesNumeradas) {
+        while (naoTemVencedor(id)){
+            for (Integer posi : posicoesNumeradas) {
 
-            if (jogada == posi && jogadorAtual == 'O' && posicoesDoTabuleiro[posi] == null) {
-                posicoesDoTabuleiro[posi] = "O";
-                tabuleiro.setJogadorAtual('X');
-                tabuleiro.setJogoPosicoes(posicoesDoTabuleiro);
-                tabuleiroRepository.save(tabuleiro);
+                if (jogada == posi && jogadorAtual == 'O' && posicoesDoTabuleiro[posi] == null) {
+                    posicoesDoTabuleiro[posi] = "O";
+                    tabuleiro.setJogadorAtual('X');
+                    tabuleiro.setJogoPosicoes(posicoesDoTabuleiro);
+                    tabuleiroRepository.save(tabuleiro);
+
+                }
+                else if(jogada == posi && jogadorAtual == 'X' && posicoesDoTabuleiro[posi] == null){
+                    posicoesDoTabuleiro[posi] = "X";
+                    tabuleiro.setJogadorAtual('O');
+                    tabuleiro.setJogoPosicoes(posicoesDoTabuleiro);
+                    tabuleiroRepository.save(tabuleiro);
+                }
+
 
             }
-            else if(jogada == posi && jogadorAtual == 'X' && posicoesDoTabuleiro[posi] == null){
-                posicoesDoTabuleiro[posi] = "X";
-                tabuleiro.setJogadorAtual('O');
-                tabuleiro.setJogoPosicoes(posicoesDoTabuleiro);
-                tabuleiroRepository.save(tabuleiro);
-            }
-
-
         }
+
+//        for (Integer posi : posicoesNumeradas) {
+//
+//            if (jogada == posi && jogadorAtual == 'O' && posicoesDoTabuleiro[posi] == null) {
+//                posicoesDoTabuleiro[posi] = "O";
+//                tabuleiro.setJogadorAtual('X');
+//                tabuleiro.setJogoPosicoes(posicoesDoTabuleiro);
+//                tabuleiroRepository.save(tabuleiro);
+//
+//            }
+//            else if(jogada == posi && jogadorAtual == 'X' && posicoesDoTabuleiro[posi] == null){
+//                posicoesDoTabuleiro[posi] = "X";
+//                tabuleiro.setJogadorAtual('O');
+//                tabuleiro.setJogoPosicoes(posicoesDoTabuleiro);
+//                tabuleiroRepository.save(tabuleiro);
+//            }
+//
+//
+//        }
+
+
+
+//        for(List<Integer> combinacao : combinacoes){
+//            for (int i = 0; i < posicoesDoTabuleiro.length; i++) {
+//                int posi1 = combinacao.get(i);
+//
+//                if(posicoesDoTabuleiro[posi1] == "X"){
+//                    vencedor = "X";
+//                }
+//                else {
+//                    if(posicoesDoTabuleiro[posi1] == "O"){
+//                        vencedor = "O";
+//                    }
+//                }
+//            }
+//
+//        }
 
 //        for(List<Integer> combinacao : combinacoes){
 //            for(Integer casa : combinacao){
@@ -457,10 +496,44 @@ public class JogoDaVelhaService {
         combinacaoDiagonal2.add(6);
         combinacoes.add(combinacaoDiagonal2);
 
+
         return combinacoes;
 
 
     }
+
+    public boolean naoTemVencedor(Long id){
+
+        List<List<Integer>> combinacoes = gerarCombinacoes();
+        Tabuleiro tabuleiro1 = tabuleiroAtual(id);
+        String[] jogoDaVelha = tabuleiro1.getJogoPosicoes();
+
+        for(List<Integer> combinacao : combinacoes){
+            for(Integer casa : combinacao){
+                for (int i = 0; i < jogoDaVelha.length; i++) {
+                    if(jogoDaVelha[casa] == "X"){
+                        tabuleiro1.setJogadorAtual('X');
+                        return false;
+                    }
+                }
+            }
+        }
+
+        for(List<Integer> combinacao : combinacoes){
+            for(Integer casa : combinacao){
+                for (int i = 0; i < jogoDaVelha.length; i++) {
+                    if(jogoDaVelha[casa] == "O"){
+                        tabuleiro1.setJogadorAtual('O');
+                        return false;
+
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+
 
 
 
