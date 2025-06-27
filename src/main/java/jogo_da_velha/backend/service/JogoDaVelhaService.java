@@ -14,6 +14,14 @@ import com.google.gson.Gson;
 
 @Service
 public class JogoDaVelhaService {
+    private String vencedor;
+
+    public String getVencedor() {
+        return vencedor;
+    }
+    public void setVencedor(String vencedor){
+        this.vencedor = vencedor;
+    }
 
     private final TabuleiroRepository tabuleiroRepository;
 
@@ -38,9 +46,13 @@ public class JogoDaVelhaService {
         Tabuleiro tabuleiro = new Tabuleiro();
 
         String[] posicoes = new String[9];
-        for (String posicao : posicoes){
+        for (String posicao : posicoes) {
             posicao = " ";
         }
+
+
+
+
 
 
         tabuleiro.setJogoPosicoes(posicoes);
@@ -58,6 +70,7 @@ public class JogoDaVelhaService {
     }
 
     public String jogoDaVelha(long id, int jogada) {
+        setVencedor(" ");
 
 
         Tabuleiro tabuleiro = tabuleiroRepository.getReferenceById(id);
@@ -79,17 +92,18 @@ public class JogoDaVelhaService {
 
 //        String[] jogo = {" ", " ", " ", " ", " ", " ", " ", " ", " "};
 
-        while (naoTemVencedor(id, posicoesDoTabuleiro)){
+
+
             for (Integer posi : posicoesNumeradas) {
 
-                if (jogada == posi && jogadorAtual == 'O' && posicoesDoTabuleiro[posi] == null) {
+                if (jogada == posi && jogadorAtual == 'O' && posicoesDoTabuleiro[posi] == null && getVencedor() == " ") {
                     posicoesDoTabuleiro[posi] = "O";
                     tabuleiro.setJogadorAtual('X');
                     tabuleiro.setJogoPosicoes(posicoesDoTabuleiro);
                     tabuleiroRepository.save(tabuleiro);
 
                 }
-                else if(jogada == posi && jogadorAtual == 'X' && posicoesDoTabuleiro[posi] == null){
+                else if(jogada == posi && jogadorAtual == 'X' && posicoesDoTabuleiro[posi] == null && getVencedor() == " "){
                     posicoesDoTabuleiro[posi] = "X";
                     tabuleiro.setJogadorAtual('O');
                     tabuleiro.setJogoPosicoes(posicoesDoTabuleiro);
@@ -97,8 +111,48 @@ public class JogoDaVelhaService {
                 }
 
 
+
             }
-        }
+
+            for(List<Integer> combinacao : combinacoes){
+                if("X".equals(posicoesDoTabuleiro[combinacao.get(0)]) && "X".equals(posicoesDoTabuleiro[combinacao.get(1)])
+                        && "X".equals(posicoesDoTabuleiro[combinacao.get(2)])){
+                    setVencedor("X");
+                    break;
+                }
+                else if("O".equals(posicoesDoTabuleiro[combinacao.get(0)]) && "O".equals(posicoesDoTabuleiro[combinacao.get(1)])
+                        && "O".equals(posicoesDoTabuleiro[combinacao.get(2)])) {
+                    setVencedor("O");
+                    break;
+
+                }
+
+            }
+
+
+//        while (naoTemVencedor(id, posicoesDoTabuleiro)){
+//
+//            for (Integer posi : posicoesNumeradas) {
+//
+//                if (jogada == posi && jogadorAtual == 'O' && posicoesDoTabuleiro[posi] == null) {
+//                    posicoesDoTabuleiro[posi] = "O";
+//                    tabuleiro.setJogadorAtual('X');
+//                    tabuleiro.setJogoPosicoes(posicoesDoTabuleiro);
+//                    tabuleiroRepository.save(tabuleiro);
+//
+//                }
+//                else if(jogada == posi && jogadorAtual == 'X' && posicoesDoTabuleiro[posi] == null){
+//                    posicoesDoTabuleiro[posi] = "X";
+//                    tabuleiro.setJogadorAtual('O');
+//                    tabuleiro.setJogoPosicoes(posicoesDoTabuleiro);
+//                    tabuleiroRepository.save(tabuleiro);
+//                }
+//
+//
+//
+//
+//            }
+//        }
 
 //        for (Integer posi : posicoesNumeradas) {
 //
@@ -138,7 +192,7 @@ public class JogoDaVelhaService {
 //        }
 
 
-    return vencedor;
+    return getVencedor();
     }
 
     private List<Integer> gerarPosicoesDoTabuleiro () {
@@ -227,32 +281,67 @@ public class JogoDaVelhaService {
 //        return true;
 //    }
 
+//    public boolean naoTemVencedor(Long id, String[] jogo){
+//
+//        List<List<Integer>> combinacoes = gerarCombinacoes();
+//        Tabuleiro tabuleiro1 = tabuleiroAtual(id);
+//
+//
+//
+//        return true;
+//    }
+
     public boolean naoTemVencedor(Long id, String[] jogo){
 
         List<List<Integer>> combinacoes = gerarCombinacoes();
         Tabuleiro tabuleiro1 = tabuleiroAtual(id);
 
         for(List<Integer> combinacao : combinacoes){
-            for(Integer casa : combinacao){
-                for (int i = 0; i < jogo.length; i++) {
-                    if(jogo[casa] == "X"){
 
-                        tabuleiroRepository.save(tabuleiro1);
-                        return false;
-                    }
-                    else {
-                        if(jogo[casa] == "O"){
-                            tabuleiroRepository.save(tabuleiro1);
-                            return false;
-                        }
-                    }
+            if(jogo[combinacao.get(0)] == "X" && jogo[combinacao.get(1)] == "X" && jogo[combinacao.get(2)] == "X" && getVencedor() == null){
+                setVencedor("X");
+                return false;
+            }
+            else {
+                if(jogo[combinacao.get(0)] == "O" && jogo[combinacao.get(1)] == "O" && jogo[combinacao.get(2)] == "O" && getVencedor() == null){
+                    setVencedor("O");
+                    return false;
                 }
             }
+
         }
+
 
 
         return true;
     }
+
+//    public boolean naoTemVencedor(Long id, String[] jogo){
+//
+//        List<List<Integer>> combinacoes = gerarCombinacoes();
+//        Tabuleiro tabuleiro1 = tabuleiroAtual(id);
+//
+//        for(List<Integer> combinacao : combinacoes){
+//            for(Integer casa : combinacao){
+//                for (int i = 0; i < jogo.length; i++) {
+//                    if(jogo[casa] == "X" && getVencedor() == null){
+//                        setVencedor("X");
+//
+//                        return false;
+//                    }
+//                    else {
+//                        if(jogo[casa] == "O" && getVencedor() == null){
+//                            setVencedor("O");
+//                            return false;
+//                        }
+//                    }
+//                }
+//            }
+//        }
+//
+//
+//        return true;
+//    }
 
 //    public boolean naoTemVencedor(Long id, String[] jogo){
 //

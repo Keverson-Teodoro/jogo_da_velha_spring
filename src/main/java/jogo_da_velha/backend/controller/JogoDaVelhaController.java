@@ -40,7 +40,14 @@ public class JogoDaVelhaController {
         jogoDaVelhaService.jogoDaVelha(id, jogada);
         Tabuleiro tabuleiro = jogoDaVelhaService.tabuleiroAtual(id);
 
-        return Arrays.toString(tabuleiro.getJogoPosicoes()) + " Vencedor: " + tabuleiro.getJogadorAtual();
+
+        return Arrays.toString(tabuleiro.getJogoPosicoes())
+                + "\n"
+                + "Jogador atual: "
+                + tabuleiro.getJogadorAtual()
+                + "\n"
+                + " Vencedor: "
+                + jogoDaVelhaService.getVencedor();
 
 
     }
