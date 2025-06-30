@@ -33,6 +33,11 @@ public class JogoDaVelhaController {
 
     }
 
+//    @PostMapping("/jogar/{jogador1}/{jogador2}")
+//    public String salvarJogadores(@PathVariable Joga){
+//
+//    }
+
     @GetMapping("jogar/{id}/{jogada}")
     public String jogada(@PathVariable Long id, @PathVariable int jogada) {
 
