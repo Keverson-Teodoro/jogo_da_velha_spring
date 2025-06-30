@@ -111,22 +111,24 @@ public class JogoDaVelhaService {
             for(List<Integer> combinacao : combinacoes){
                 if("X".equals(posicoesDoTabuleiro[combinacao.get(0)]) && "X".equals(posicoesDoTabuleiro[combinacao.get(1)])
                         && "X".equals(posicoesDoTabuleiro[combinacao.get(2)])){
-//                    setVencedor("X");
+
                     setVencedor(jogador1.getNome());
                     jogador1.setNumeroDeVitorias(+1);
                     jogadorService.salvarJogador(jogador1);
                     tabuleiro.setVencedor(jogador1.getNome());
+                    tabuleiro.setEscolhaVencedor("X");
                     tabuleiroRepository.save(tabuleiro);
 
                     break;
                 }
                 else if("O".equals(posicoesDoTabuleiro[combinacao.get(0)]) && "O".equals(posicoesDoTabuleiro[combinacao.get(1)])
                         && "O".equals(posicoesDoTabuleiro[combinacao.get(2)])) {
-//                    setVencedor("O");
+
                     setVencedor(jogador2.getNome());
                     jogador2.setNumeroDeVitorias(+1);
                     jogadorService.salvarJogador(jogador2);
                     tabuleiro.setVencedor(jogador2.getNome());
+                    tabuleiro.setEscolhaVencedor("O");
                     tabuleiroRepository.save(tabuleiro);
                     break;
 

@@ -21,6 +21,9 @@ public class Tabuleiro {
 
     @Column(name = "vencedor")
     private String vencedor;
+
+    @Column(name = "escolha_vencedor")
+    private String escolhaVencedor;
     
 
     public Tabuleiro (){
@@ -56,5 +59,13 @@ public class Tabuleiro {
 
     public void setVencedor(String vencedor) {
         this.vencedor = vencedor;
+    }
+
+    public String getEscolhaVencedor() {
+        return escolhaVencedor;
+    }
+
+    public void setEscolhaVencedor(String escolhaVencedor) {
+        this.escolhaVencedor = escolhaVencedor;
     }
 }

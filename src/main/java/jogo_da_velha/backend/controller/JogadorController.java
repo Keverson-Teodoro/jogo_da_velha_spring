@@ -22,7 +22,7 @@ public class JogadorController {
     public String cadastrarJogador(@RequestBody Jogador jogador){
         jogadorService.salvarJogador(jogador);
 
-        return "Jogador"
+        return "Jogador "
                 + jogador.getNome()
                 + " salvo com sucesso";
     }
