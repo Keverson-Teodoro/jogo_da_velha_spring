@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
+import jogo_da_velha.backend.model.Jogador;
 import jogo_da_velha.backend.model.Tabuleiro;
 import jogo_da_velha.backend.repository.TabuleiroRepository;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +25,12 @@ public class JogoDaVelhaService {
     }
 
     private final TabuleiroRepository tabuleiroRepository;
+    private final JogadorService jogadorService;
 
 
-    public JogoDaVelhaService(TabuleiroRepository tabuleiroRepository) {
+    public JogoDaVelhaService(TabuleiroRepository tabuleiroRepository, JogadorService jogadorService) {
         this.tabuleiroRepository = tabuleiroRepository;
+        this.jogadorService = jogadorService;
     }
 
 //    List<Tabuleiro> listaDeId = tabuleiroRepository.findAll();
@@ -63,7 +66,11 @@ public class JogoDaVelhaService {
         return tabuleiroRepository.getReferenceById(id);
     }
 
-    public String jogoDaVelha(long id, int jogada) {
+
+    public String jogoDaVelha(long id, int jogada, long idJogador1, long idJogador2) {
+
+        Jogador jogador1 = jogadorService.buscarJogador(idJogador1);
+        Jogador jogador2 = jogadorService.buscarJogador(idJogador2);
         setVencedor(" ");
 
 
@@ -104,18 +111,34 @@ public class JogoDaVelhaService {
             for(List<Integer> combinacao : combinacoes){
                 if("X".equals(posicoesDoTabuleiro[combinacao.get(0)]) && "X".equals(posicoesDoTabuleiro[combinacao.get(1)])
                         && "X".equals(posicoesDoTabuleiro[combinacao.get(2)])){
-                    setVencedor("X");
+//                    setVencedor("X");
+                    setVencedor(jogador1.getNome());
+                    jogador1.setNumeroDeVitorias(+1);
+                    jogadorService.salvarJogador(jogador1);
+                    tabuleiro.setVencedor(jogador1.getNome());
+                    tabuleiroRepository.save(tabuleiro);
+
                     break;
                 }
                 else if("O".equals(posicoesDoTabuleiro[combinacao.get(0)]) && "O".equals(posicoesDoTabuleiro[combinacao.get(1)])
                         && "O".equals(posicoesDoTabuleiro[combinacao.get(2)])) {
-                    setVencedor("O");
+//                    setVencedor("O");
+                    setVencedor(jogador2.getNome());
+                    jogador2.setNumeroDeVitorias(+1);
+                    jogadorService.salvarJogador(jogador2);
+                    tabuleiro.setVencedor(jogador2.getNome());
+                    tabuleiroRepository.save(tabuleiro);
                     break;
 
                 }
 
             }
-    return getVencedor();
+
+            if(tabuleiro.getVencedor() == null){
+                tabuleiro.setVencedor("VELHA");
+                tabuleiroRepository.save(tabuleiro);
+            }
+    return tabuleiro.getVencedor();
     }
 
 

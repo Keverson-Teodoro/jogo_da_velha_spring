@@ -33,16 +33,13 @@ public class JogoDaVelhaController {
 
     }
 
-//    @PostMapping("/jogar/{jogador1}/{jogador2}")
-//    public String salvarJogadores(@PathVariable Joga){
-//
-//    }
-
-    @GetMapping("jogar/{id}/{jogada}")
-    public String jogada(@PathVariable Long id, @PathVariable int jogada) {
 
 
-        jogoDaVelhaService.jogoDaVelha(id, jogada);
+    @GetMapping("jogar/{id}/{jogada}/{idJogador1}/{idJogador2}")
+    public String jogada(@PathVariable("id") Long id, @PathVariable("jogada") int jogada, @PathVariable("idJogador1") Long idJogador1, @PathVariable("idJogador2") Long idJogador2) {
+
+
+        jogoDaVelhaService.jogoDaVelha(id, jogada, idJogador1, idJogador2);
         Tabuleiro tabuleiro = jogoDaVelhaService.tabuleiroAtual(id);
 
 

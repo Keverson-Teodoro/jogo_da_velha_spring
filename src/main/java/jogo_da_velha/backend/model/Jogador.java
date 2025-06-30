@@ -33,6 +33,9 @@ public class Jogador {
         this.numeroDePartidasJogadas = numeroDePartidasJogadas;
     }
 
+    public Jogador(String nome) {
+    }
+
     public String getNome() {
         return nome;
     }
