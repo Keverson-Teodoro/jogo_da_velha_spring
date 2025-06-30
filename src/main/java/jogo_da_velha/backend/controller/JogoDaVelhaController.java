@@ -2,15 +2,13 @@ package jogo_da_velha.backend.controller;
 
 import jogo_da_velha.backend.model.Tabuleiro;
 import jogo_da_velha.backend.repository.TabuleiroRepository;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import jogo_da_velha.backend.service.JogoDaVelhaService;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 
 @RestController
@@ -42,13 +40,14 @@ public class JogoDaVelhaController {
         Tabuleiro tabuleiro = jogoDaVelhaService.tabuleiroAtual(id);
 
 
+
         return Arrays.toString(tabuleiro.getJogoPosicoes())
                 + "\n"
                 + "Jogador atual: "
                 + tabuleiro.getJogadorAtual()
                 + "\n"
                 + " Vencedor: "
-                + jogoDaVelhaService.getVencedor();
+                + tabuleiro.getVencedor();
 
 
     }

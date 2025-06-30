@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import jakarta.persistence.Table;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jogo_da_velha.backend.model.Jogador;
 import jogo_da_velha.backend.model.Tabuleiro;
@@ -140,12 +141,21 @@ public class JogoDaVelhaService {
 
                 }
 
+
             }
 
-            if(tabuleiro.getVencedor() == null){
-                tabuleiro.setVencedor("VELHA");
-                tabuleiroRepository.save(tabuleiro);
-            }
+        if(tabuleiro.getJogoPosicoes()[0] != null && tabuleiro.getJogoPosicoes()[1] != null && tabuleiro.getJogoPosicoes()[2] != null
+                && tabuleiro.getJogoPosicoes()[3] != null && tabuleiro.getJogoPosicoes()[4] != null && tabuleiro.getJogoPosicoes()[5] != null
+                && tabuleiro.getJogoPosicoes()[6] != null && tabuleiro.getJogoPosicoes()[7] != null && tabuleiro.getJogoPosicoes()[8] !=null
+                && tabuleiro.getVencedor() == null){
+            tabuleiro.setVencedor("VELHA");
+
+            tabuleiroRepository.save(tabuleiro);
+
+        }
+
+
+
     return tabuleiro.getVencedor();
     }
 
@@ -225,6 +235,7 @@ public class JogoDaVelhaService {
 
 
     }
+
 
 
 
