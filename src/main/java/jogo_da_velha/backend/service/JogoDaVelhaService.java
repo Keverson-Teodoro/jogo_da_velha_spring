@@ -45,8 +45,11 @@ public class JogoDaVelhaService {
     // return id;
     // }
 
-    public Long iniciarJogo() {
+    public Long iniciarJogo(long idJogador1, long idJogador2) {
         Tabuleiro tabuleiro = new Tabuleiro();
+
+        Jogador player1 = jogadorService.buscarJogador(idJogador1);
+        Jogador player2 = jogadorService.buscarJogador(idJogador2);
 
         String[] posicoes = new String[9];
         for (String posicao : posicoes) {
@@ -54,7 +57,8 @@ public class JogoDaVelhaService {
         }
 
         tabuleiro.setJogoPosicoes(posicoes);
-
+        tabuleiro.setJogador1(idJogador1);
+        tabuleiro.setJogador2(idJogador2);
         tabuleiro.setJogadorAtual('X');
 
         var tabuleiroSalvo = tabuleiroRepository.save(tabuleiro);
@@ -67,14 +71,16 @@ public class JogoDaVelhaService {
     }
 
 
-    public String jogoDaVelha(long id, int jogada, long idJogador1, long idJogador2) {
+    public String jogoDaVelha(long id, int jogada) {
 
-        Jogador jogador1 = jogadorService.buscarJogador(idJogador1);
-        Jogador jogador2 = jogadorService.buscarJogador(idJogador2);
         setVencedor(" ");
 
 
         Tabuleiro tabuleiro = tabuleiroRepository.getReferenceById(id);
+
+        Jogador player1 = jogadorService.buscarJogador(tabuleiro.getJogador1());
+        Jogador player2 = jogadorService.buscarJogador(tabuleiro.getJogador2());
+
         String vencedor = " ";
         char jogadorAtual = tabuleiro.getJogadorAtual();
 
@@ -112,10 +118,10 @@ public class JogoDaVelhaService {
                 if("X".equals(posicoesDoTabuleiro[combinacao.get(0)]) && "X".equals(posicoesDoTabuleiro[combinacao.get(1)])
                         && "X".equals(posicoesDoTabuleiro[combinacao.get(2)])){
 
-                    setVencedor(jogador1.getNome());
-                    jogador1.setNumeroDeVitorias(+1);
-                    jogadorService.salvarJogador(jogador1);
-                    tabuleiro.setVencedor(jogador1.getNome());
+                    setVencedor(player1.getNome());
+                    player1.setNumeroDeVitorias(+1);
+                    jogadorService.salvarJogador(player1);
+                    tabuleiro.setVencedor(player1.getNome());
                     tabuleiro.setEscolhaVencedor("X");
                     tabuleiroRepository.save(tabuleiro);
 
@@ -124,10 +130,10 @@ public class JogoDaVelhaService {
                 else if("O".equals(posicoesDoTabuleiro[combinacao.get(0)]) && "O".equals(posicoesDoTabuleiro[combinacao.get(1)])
                         && "O".equals(posicoesDoTabuleiro[combinacao.get(2)])) {
 
-                    setVencedor(jogador2.getNome());
-                    jogador2.setNumeroDeVitorias(+1);
-                    jogadorService.salvarJogador(jogador2);
-                    tabuleiro.setVencedor(jogador2.getNome());
+                    setVencedor(player2.getNome());
+                    player2.setNumeroDeVitorias(+1);
+                    jogadorService.salvarJogador(player2);
+                    tabuleiro.setVencedor(player2.getNome());
                     tabuleiro.setEscolhaVencedor("O");
                     tabuleiroRepository.save(tabuleiro);
                     break;

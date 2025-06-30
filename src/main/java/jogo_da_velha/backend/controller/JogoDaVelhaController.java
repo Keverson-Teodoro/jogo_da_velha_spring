@@ -27,19 +27,18 @@ public class JogoDaVelhaController {
     }
 
 
-    @GetMapping("/jogar")
-    public long iniciarJogo() {
-        return jogoDaVelhaService.iniciarJogo();
-
+    @GetMapping("/iniciar/{idJogador1}/{idJogador2}")
+    public long iniciarJogo(@PathVariable("idJogador1") long idJogador1, @PathVariable("idJogador2") long idJogador2) {
+        return jogoDaVelhaService.iniciarJogo(idJogador1, idJogador2);
     }
 
 
 
-    @GetMapping("jogar/{id}/{jogada}/{idJogador1}/{idJogador2}")
-    public String jogada(@PathVariable("id") Long id, @PathVariable("jogada") int jogada, @PathVariable("idJogador1") Long idJogador1, @PathVariable("idJogador2") Long idJogador2) {
+    @GetMapping("jogar/{id}/{jogada}")
+    public String jogada(@PathVariable("id") Long id, @PathVariable("jogada") int jogada) {
 
 
-        jogoDaVelhaService.jogoDaVelha(id, jogada, idJogador1, idJogador2);
+        jogoDaVelhaService.jogoDaVelha(id, jogada);
         Tabuleiro tabuleiro = jogoDaVelhaService.tabuleiroAtual(id);
 
 

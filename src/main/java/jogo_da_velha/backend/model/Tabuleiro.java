@@ -24,6 +24,15 @@ public class Tabuleiro {
 
     @Column(name = "escolha_vencedor")
     private String escolhaVencedor;
+
+
+    @Column(name = "id_jogador_1")
+    private long jogador1;
+
+
+    @Column(name = "id_jogador_2")
+    private long jogador2;
+
     
 
     public Tabuleiro (){
@@ -67,5 +76,22 @@ public class Tabuleiro {
 
     public void setEscolhaVencedor(String escolhaVencedor) {
         this.escolhaVencedor = escolhaVencedor;
+    }
+
+
+    public long getJogador1() {
+        return jogador1;
+    }
+
+    public void setJogador1(long jogador1) {
+        this.jogador1 = jogador1;
+    }
+
+    public long getJogador2() {
+        return jogador2;
+    }
+
+    public void setJogador2(long jogador2) {
+        this.jogador2 = jogador2;
     }
 }
